@@ -24,7 +24,8 @@ String header;
 
 
 // Variables
-//parque libre = 0 y ocupado = 1
+//parque libre = 0 y ocupado = 1\
+//minuscala = libre y mayuscula = ocupado
 struct Estados{
   unsigned char par0 = 0;
   unsigned char par1 = 0;
@@ -69,7 +70,9 @@ void loop()
   // put your main code here, to run repeatedly:
   if (Serial.available() > 0){
     estado_parqueo.par0 = Serial.read();
-    Serial.write(estado_parqueo.par0);
+    //lo combierte a su valor en decimal
+    estado_parqueo.par0 -= 48;
+    //Serial.write(estado_parqueo.par0);
   }
   server.handleClient();
 }
@@ -115,46 +118,84 @@ String SendHTML()
   ptr += "<tbody>\n";
   ptr += "<tr>\n";
   ptr += "<th scope=\"row\">1</th>\n";
-  if (estado_parqueo.par0 == 1)
-  {
-    ptr += "<td>Ocupado</td>\n";
-  }
-  if (estado_parqueo.par0 == 0) {
-    ptr += "<td>Libre</td>\n";
-  }
-
-  if (estado_parqueo.par0 == 10) {
-    ptr += "<td>Es 13 o 10</td>\n";
-  }
+    if (estado_parqueo.par0){
+      ptr += "<td>Ocupado</td>\n";
+    }
+    else{
+      ptr += "<td>Libre</td>\n";
+    }
   ptr += "</tr>\n";
+  
   ptr += "<tr>\n";
   ptr += "<th scope=\"row\">2</th>\n";
-  ptr += "<td>Ocupado</td>\n";
+    if (estado_parqueo.par1){
+      ptr += "<td>Ocupado</td>\n";
+    }
+    else{
+      ptr += "<td>Libre</td>\n";
+    }
   ptr += "</tr>\n";
+  
   ptr += "<tr>\n";
   ptr += "<th scope=\"row\">3</th>\n";
-  ptr += "<td>Ocupado</td>\n";
+    if (estado_parqueo.par2){
+      ptr += "<td>Ocupado</td>\n";
+    }
+    else{
+      ptr += "<td>Libre</td>\n";
+    }
   ptr += "</tr>\n";
+
   ptr += "<tr>\n";
   ptr += "<th scope=\"row\">4</th>\n";
-  ptr += "<td>Ocupado</td>\n";
+    if (estado_parqueo.par3){
+      ptr += "<td>Ocupado</td>\n";
+    }
+    else{
+      ptr += "<td>Libre</td>\n";
+    }
   ptr += "</tr>\n";
+
   ptr += "<tr>\n";
   ptr += "<th scope=\"row\">5</th>\n";
-  ptr += "<td>Ocupado</td>\n";
+    if (estado_parqueo.par4){
+      ptr += "<td>Ocupado</td>\n";
+    }
+    else{
+      ptr += "<td>Libre</td>\n";
+    }
   ptr += "</tr>\n";
+
   ptr += "<tr>\n";
   ptr += "<th scope=\"row\">6</th>\n";
-  ptr += "<td>Ocupado</td>\n";
+    if (estado_parqueo.par5){
+      ptr += "<td>Ocupado</td>\n";
+    }
+    else{
+      ptr += "<td>Libre</td>\n";
+    }
   ptr += "</tr>\n";
+
   ptr += "<tr>\n";
   ptr += "<th scope=\"row\">7</th>\n";
-  ptr += "<td>Ocupado</td>\n";
+    if (estado_parqueo.par6){
+      ptr += "<td>Ocupado</td>\n";
+    }
+    else{
+      ptr += "<td>Libre</td>\n";
+    }
   ptr += "</tr>\n";
+
   ptr += "<tr>\n";
   ptr += "<th scope=\"row\">8</th>\n";
-  ptr += "<td>Ocupado</td>\n";
+    if (estado_parqueo.par7){
+      ptr += "<td>Ocupado</td>\n";
+    }
+    else{
+      ptr += "<td>Libre</td>\n";
+    }
   ptr += "</tr>\n";
+  
   ptr += "</tbody>\n";
   ptr += "</table>\n";
   ptr += "<figcaption class=\"blockquote-footer\">\n";
