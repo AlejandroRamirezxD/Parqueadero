@@ -198,7 +198,7 @@ String SendHTML()
   ptr += "</tbody>\n";
   ptr += "</table>\n";
   ptr += "<figcaption class=\"blockquote-footer\">\n";
-  ptr += "By: Nico and Saidon\n";
+  ptr += "By: Nico and Psaidon\n";
   ptr += "</figcaption>\n";
   ptr += "<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2\" crossorigin=\"anonymous\"></script>\n";
   ptr += "</body>\n";
