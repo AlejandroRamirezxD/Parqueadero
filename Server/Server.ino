@@ -1,10 +1,13 @@
 //librerias
 #include <WiFi.h>
+#include <SPIFFS.h>
 #include <WebServer.h>
 
 /* Put your SSID & Password */
 const char* ssid = "Starbucks_free_wifi";  // Enter SSID here
 const char* password = "12345678";  //Enter Password here
+
+
 
 /* Put IP Address details */
 IPAddress local_ip(192,168,1,1);
@@ -21,6 +24,18 @@ String header;
 
 
 // Variables
+//parque libre = 0 y ocupado = 1
+struct Estados{
+  unsigned char par0 = 0;
+  unsigned char par1 = 0;
+  unsigned char par2 = 0;
+  unsigned char par3 = 0;
+  unsigned char par4 = 0;
+  unsigned char par5 = 0;
+  unsigned char par6 = 0;
+  unsigned char par7 = 0;
+}estado_parqueo;
+
 unsigned char letra;
 
 
@@ -29,16 +44,25 @@ void setup()
   // put your setup code here, to run once:
   Serial.begin(115200);
 
-  //desavilitar el watch dog timer
-  disableCore0WDT();
-  WiFi.softAP(ssid, password);
-  WiFi.softAPConfig(local_ip, gateway, subnet);
-  delay(100);
+  // Connect to your wi-fi modem
+  WiFi.begin(ssid, password);
 
-  server.on("/", handle_OnConnect);
+  // Check wi-fi is connected to wi-fi network
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.print(".");
+  }
+  Serial.println("");
+  Serial.println("WiFi connected successfully");
+  Serial.print("Got IP: ");
+  Serial.println(WiFi.localIP());  //Show ESP32 IP on serial
 
+  server.on("/", handle_OnConnect); // Directamente desde e.g. 
+  
   server.begin();
   Serial.println("HTTP server started");
+  Serial.print (WiFi.localIP());
+  delay(100);
 }
 
 void loop() 
@@ -74,7 +98,12 @@ String SendHTML ()
   ptr += "<tbody>\n";
   ptr += "<tr>\n";
   ptr += "<th scope=\"row\">1</th>\n";
-  ptr += "<td>Ocupado</td>\n";
+  if (estado_parqueo.par0){
+    ptr += "<td>Ocupado</td>\n";
+  }
+  else {
+    ptr += "<td>Libre</td>\n";
+  }
   ptr += "</tr>\n";
   ptr += "<tr>\n";
   ptr += "<th scope=\"row\">2</th>\n";
