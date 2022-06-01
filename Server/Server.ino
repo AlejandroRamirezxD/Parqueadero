@@ -68,6 +68,12 @@ void setup()
 void loop() 
 {
   // put your main code here, to run repeatedly:
+  if (Serial.available() > 0){
+    estado_parqueo.par0 = Serial.read();
+  }
+
+
+
   server.handleClient();
 }
 
@@ -98,10 +104,11 @@ String SendHTML ()
   ptr += "<tbody>\n";
   ptr += "<tr>\n";
   ptr += "<th scope=\"row\">1</th>\n";
+  
   if (estado_parqueo.par0){
     ptr += "<td>Ocupado</td>\n";
   }
-  else {
+  else{ 
     ptr += "<td>Libre</td>\n";
   }
   ptr += "</tr>\n";
