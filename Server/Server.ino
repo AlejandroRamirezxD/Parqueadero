@@ -24,8 +24,7 @@ String header;
 
 
 // Variables
-//parque libre = 0 y ocupado = 1\
-//minuscala = libre y mayuscula = ocupado
+//parque libre = 0 y ocupado = 1
 struct Estados{
   unsigned char par0 = 0;
   unsigned char par1 = 0;
