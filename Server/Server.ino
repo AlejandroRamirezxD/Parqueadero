@@ -61,7 +61,6 @@ void setup()
   
   server.begin();
   Serial.println("HTTP server started");
-  Serial.print (WiFi.localIP());
   delay(100);
 }
 
@@ -70,10 +69,8 @@ void loop()
   // put your main code here, to run repeatedly:
   if (Serial.available() > 0){
     estado_parqueo.par0 = Serial.read();
+    Serial.write(estado_parqueo.par0);
   }
-
-
-
   server.handleClient();
 }
 
@@ -82,10 +79,12 @@ void handle_OnConnect()
   server.send(200, "text/html", SendHTML());
 }
 
-String SendHTML ()
+String SendHTML()
 {
-  String ptr = "<html lang=\"en\">\n";
+  String ptr = "<!DOCTYPE html> <html>\n";
+  ptr += "<html lang=\"en\">\n";
   ptr += "<head>\n";
+  ptr += "<script>function autoRefresh(){window.location=window.location.href}setInterval(\"autoRefresh()\",5000);</script>";
   ptr += "<meta charset=\"UTF-8\">\n";
   ptr += "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n";
   ptr += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n";
@@ -93,8 +92,20 @@ String SendHTML ()
   ptr += "<title>Parqueo Nova 13</title>\n";
   ptr += "</head>\n";
   ptr += "<body>\n";
-  ptr += "<h1>Parque Nova 13</h1>\n";
-  ptr += "<table class=\"table\">\n";
+  ptr += "<table border=\"0\">\n";
+  ptr += "<tr>\n";
+  ptr += "<th>\n";
+  ptr += "<img src=\"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.bCrarp7bXtFJM64wWQntsgHaFk%26pid%3DApi&f=1\" class=\"img-thumbnail\" alt=\"Nova 13\">\n";
+  ptr += "</th>\n";
+  ptr += "<th>\n";
+  ptr += "<h1 class=\"display-1\">Nova 13</h1>\n";
+  ptr += "<figcaption class=\"blockquote-footer\">\n";
+  ptr += "El parqueo de tus sueños\n";
+  ptr += "</figcaption>\n";
+  ptr += "</th>\n";
+  ptr += "</tr>\n";
+  ptr += "</table>\n";
+  ptr += "<table class=\"table table-dark table-striped\">\n";
   ptr += "<thead>\n";
   ptr += "<tr>\n";
   ptr += "<th scope=\"col\">#</th>\n";
@@ -104,12 +115,16 @@ String SendHTML ()
   ptr += "<tbody>\n";
   ptr += "<tr>\n";
   ptr += "<th scope=\"row\">1</th>\n";
-  
-  if (estado_parqueo.par0){
+  if (estado_parqueo.par0 == 1)
+  {
     ptr += "<td>Ocupado</td>\n";
   }
-  else{ 
+  if (estado_parqueo.par0 == 0) {
     ptr += "<td>Libre</td>\n";
+  }
+
+  if (estado_parqueo.par0 == 10) {
+    ptr += "<td>Es 13 o 10</td>\n";
   }
   ptr += "</tr>\n";
   ptr += "<tr>\n";
@@ -142,9 +157,11 @@ String SendHTML ()
   ptr += "</tr>\n";
   ptr += "</tbody>\n";
   ptr += "</table>\n";
+  ptr += "<figcaption class=\"blockquote-footer\">\n";
+  ptr += "By: Nico and Saidon\n";
+  ptr += "</figcaption>\n";
   ptr += "<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js\" integrity=\"sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2\" crossorigin=\"anonymous\"></script>\n";
   ptr += "</body>\n";
   ptr += "</html>";
-
   return ptr;
 }
